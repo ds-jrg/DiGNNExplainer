@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-02-26">
+    <creator>NetworkX 3.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="type" type="long" />
+      <attribute id="1" title="x" type="long" />
+    </attributes>
+    <nodes>
+      <node id="20640" label="20640">
+        <attvalues>
+          <attvalue for="0" value="2" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="26117" label="26117">
+        <attvalues>
+          <attvalue for="0" value="3" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="19145" label="19145">
+        <attvalues>
+          <attvalue for="0" value="2" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="11538" label="11538">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="18614" label="18614">
+        <attvalues>
+          <attvalue for="0" value="2" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="18521" label="18521">
+        <attvalues>
+          <attvalue for="0" value="2" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="19546" label="19546">
+        <attvalues>
+          <attvalue for="0" value="2" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="20640" target="11538" id="0" />
+      <edge source="26117" target="11538" id="4" />
+      <edge source="19145" target="11538" id="6" />
+      <edge source="11538" target="18521" id="9" />
+      <edge source="11538" target="18614" id="10" />
+      <edge source="11538" target="19546" id="11" />
+    </edges>
+  </graph>
+</gexf>

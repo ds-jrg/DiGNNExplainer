@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-06-25">
+    <creator>NetworkX 3.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="shape" type="long" />
+      <attribute id="1" title="shapes_in_khop" type="long" />
+    </attributes>
+    <nodes>
+      <node id="50" label="50">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="51" label="51">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="52" label="52">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="53" label="53">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="54" label="54">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="55" label="55">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="56" label="56">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="50" target="51" id="0" />
+      <edge source="50" target="55" id="1" />
+      <edge source="50" target="56" id="2" />
+      <edge source="51" target="52" id="3" />
+      <edge source="52" target="53" id="4" />
+      <edge source="53" target="54" id="5" />
+      <edge source="54" target="55" id="6" />
+    </edges>
+  </graph>
+</gexf>

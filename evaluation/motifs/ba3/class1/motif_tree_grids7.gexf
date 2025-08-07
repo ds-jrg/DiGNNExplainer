@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-06-26">
+    <creator>NetworkX 3.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="shape" type="long" />
+      <attribute id="1" title="shapes_in_khop" type="long" />
+    </attributes>
+    <nodes>
+      <node id="71" label="71">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="72" label="72">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="73" label="73">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="74" label="74">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="75" label="75">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="76" label="76">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="77" label="77">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="78" label="78">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="79" label="79">
+        <attvalues>
+          <attvalue for="0" value="8" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="80" label="80">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="71" target="74" id="0" />
+      <edge source="71" target="72" id="1" />
+      <edge source="72" target="75" id="2" />
+      <edge source="72" target="73" id="3" />
+      <edge source="72" target="80" id="4" />
+      <edge source="73" target="76" id="5" />
+      <edge source="74" target="77" id="6" />
+      <edge source="74" target="75" id="7" />
+      <edge source="75" target="78" id="8" />
+      <edge source="75" target="76" id="9" />
+      <edge source="76" target="79" id="10" />
+      <edge source="77" target="78" id="11" />
+      <edge source="78" target="79" id="12" />
+    </edges>
+  </graph>
+</gexf>

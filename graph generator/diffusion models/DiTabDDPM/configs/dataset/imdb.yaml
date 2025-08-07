@@ -1,0 +1,9 @@
+name: imdb
+remove_h: null
+datadir: 'data/imdb/'
+node_class : 2
+node_type : 'movie'
+node_feature_size : 10
+node_feature_types : [0,1,2,3,4,5]
+feature_selection_method : 'frequency' #'frequency'
+threshold : 0.94

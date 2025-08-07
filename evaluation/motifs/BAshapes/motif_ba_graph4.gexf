@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-06-25">
+    <creator>NetworkX 3.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="shape" type="long" />
+      <attribute id="1" title="shapes_in_khop" type="long" />
+    </attributes>
+    <nodes>
+      <node id="24" label="24">
+        <attvalues>
+          <attvalue for="0" value="5" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="25" label="25">
+        <attvalues>
+          <attvalue for="0" value="5" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="26" label="26">
+        <attvalues>
+          <attvalue for="0" value="5" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="27" label="27">
+        <attvalues>
+          <attvalue for="0" value="5" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="28" label="28">
+        <attvalues>
+          <attvalue for="0" value="5" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="29" label="29">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="24" target="25" id="0" />
+      <edge source="24" target="26" id="1" />
+      <edge source="24" target="27" id="2" />
+      <edge source="24" target="28" id="3" />
+      <edge source="28" target="29" id="4" />
+    </edges>
+  </graph>
+</gexf>

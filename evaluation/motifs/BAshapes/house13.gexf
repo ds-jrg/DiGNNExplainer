@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-07-06">
+    <creator>NetworkX 3.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="House Graph">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="shape" type="long" />
+      <attribute id="1" title="shapes_in_khop" type="long" />
+    </attributes>
+    <nodes>
+      <node id="76" label="76">
+        <attvalues>
+          <attvalue for="0" value="14" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="77" label="77">
+        <attvalues>
+          <attvalue for="0" value="14" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="78" label="78">
+        <attvalues>
+          <attvalue for="0" value="14" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="79" label="79">
+        <attvalues>
+          <attvalue for="0" value="14" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="80" label="80">
+        <attvalues>
+          <attvalue for="0" value="14" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+      <node id="81" label="81">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="76" target="77" id="0" />
+      <edge source="76" target="78" id="1" />
+      <edge source="77" target="79" id="2" />
+      <edge source="78" target="79" id="3" />
+      <edge source="78" target="80" id="4" />
+      <edge source="78" target="81" id="5" />
+      <edge source="79" target="80" id="6" />
+    </edges>
+  </graph>
+</gexf>

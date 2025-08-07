@@ -1,0 +1,5 @@
+name: 'mutag'            # mutag, mutag_positional
+datadir: 'data/mutag/'
+remove_h: True
+random_subset: null
+pin_memory: False

@@ -1,0 +1,12 @@
+# Model settings
+type: 'discrete'
+transition: 'marginal'                          # uniform or marginal
+model: 'mlp'
+diffusion_steps: 25000
+diffusion_noise_schedule: 'cosine'              # 'cosine', 'polynomial_2'
+n_layers: 5
+
+hidden_mlp_dims: {'Feat': 256}
+
+hidden_dims : { 'dfeat': 256,'dim_ffFeat':256}
+

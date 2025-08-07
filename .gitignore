@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+.idea/
+orca/orca
+orca/tmp*
+data/
+dblp_data/
+imdb_data/
+outputs/
+sampled_features/
