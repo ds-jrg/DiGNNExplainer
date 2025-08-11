@@ -46,10 +46,14 @@ The specifications of the machine used to run the code:
     `littleballoffur==2.3.1`
      
      `rdkit`
+     
+     `pyemd==1.0.0`
+     
+     `easydict==1.13`
 
     	
- 2.  For `diffusion_graph_gen` and `DiTabDDPM` create a conda enviroment by following the installation steps of DiGress: https://github.com/cvignac/DiGress.  <br/>
- 
+ 2.  For `diffusion_graph_gen` and `DiTabDDPM` create a conda enviroment by following the installation steps of [DiGress](https://github.com/cvignac/DiGress).  <br/>
+  
 
 ## Run code
 1. To run experiments in evaluation Table 1 (in main paper), <br/>
@@ -81,6 +85,9 @@ The specifications of the machine used to run the code:
 	  ```
 	- Navigate to `diffusion_graph_gen` folder and run
 	   `python3 main.py`
+	   
+ - To generate the graphs for `baseline_vae` refer to `gvae.py` of [GraphVAE implementation](https://github.com/deepfindr/gvae/tree/fdcc55c175e9f2b01ef1878b4952a770d9b75d47).<br/>
+  
 
  - To run `DiTabDDPM` for DBLP Author class:<br/>
  	- Specify dataset in `configs/config.yaml`, and node class, node feature size in `graph generator/diffusion models/DiTabDDPM/configs/dataset/dblp.yaml`:
@@ -102,9 +109,9 @@ The specifications of the machine used to run the code:
           
      		
 4. To run code in `baseline_explainers`,
-- For `xgnn`, refer to [XGNN](https://github.com/divelab/DIG/tree/5842d8d2a64c318286291fc93d3d11cfbc1e9749/dig/xgraph/XGNN).<br/>
-- For `gnninterpreter`, refer to [GNNInterpreter](https://github.com/yolandalalala/GNNInterpreter/tree/a419343d0de20674e14cd1051b7983981cf6b47c) 
-- For `d4explainer`, follow the installation steps of [D4Explainer](https://github.com/Graph-and-Geometric-Learning/D4Explainer/tree/997b4c755fc19d0494c09bc3bd4925777ea53aca).<br/>
+- For `xgnn`, refer to [XGNN code](https://github.com/divelab/DIG/tree/5842d8d2a64c318286291fc93d3d11cfbc1e9749/dig/xgraph/XGNN).<br/>
+- For `gnninterpreter`, refer to [GNNInterpreter code](https://github.com/yolandalalala/GNNInterpreter/tree/a419343d0de20674e14cd1051b7983981cf6b47c) and [another GNNInterpreter implementation](https://github.com/MeneerTS/FACT2024_GNNInterpreter/tree/8ed5958383147c0c57f1e3bd34440636e926270d/GNNInterpreter-Most-Recent-Version).
+- For `d4explainer`, follow the installation steps of [D4Explainer code](https://github.com/Graph-and-Geometric-Learning/D4Explainer/tree/997b4c755fc19d0494c09bc3bd4925777ea53aca).<br/>
 
        
 ## Source of datasets
