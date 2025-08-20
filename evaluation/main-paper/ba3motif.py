@@ -280,11 +280,11 @@ graph_sel_time = time.time() - graph_sel_start
 print('Graph selection time', np.sum(eval_time) + graph_sel_time)
 
 
-def get_avg_fidelity(graph_list):
-    class_avg_fidelity = []
+def get_faithfulness(graph_list):
+    class_faithfulness = []
     for i, expln_graph in enumerate(graph_list):
         expln_graph = graph_dict.get(expln_graph)
-        fid_score_list = []
+        faith_score_list = []
         if i == 0:
 
             motifs_path = '../motifs/ba3/class0/'
@@ -304,20 +304,20 @@ def get_avg_fidelity(graph_list):
 
             GM = nx.algorithms.isomorphism.GraphMatcher(expln_graph, motif_graph)
             x = 1 if GM.subgraph_is_isomorphic() else 0
-            fid_score_list.append(x)
+            faith_score_list.append(x)
 
-        class_avg_fidelity.append(np.mean(fid_score_list))
+        class_faithfulness.append(np.mean(faith_score_list))
 
-    return np.mean(class_avg_fidelity)
+    return np.mean(class_faithfulness)
 
 
-avg_fidelity_list = []
+faithfulness_list = []
 
 for i in range(0,10):
-    avg_fidelity = get_avg_fidelity(class_graphid_list[i])
+    faithfulness = get_faithfulness(class_graphid_list[i])
 
-    print('Run'+str(i),avg_fidelity)
-    avg_fidelity_list.append(avg_fidelity)
+    print('Run'+str(i),faithfulness)
+    faithfulness_list.append(faithfulness)
 
 
-print('Avg fidelity', np.mean(avg_fidelity_list))
+print('Avg faithfulness', np.mean(faithfulness_list))

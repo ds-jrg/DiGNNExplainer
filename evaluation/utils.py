@@ -5,14 +5,14 @@ import networkx as nx
 from sklearn.feature_selection import VarianceThreshold
 
 
-def get_avg_fidelity(graphid_list,edges_list,motifs_path):
-    class_avg_fidelity = []
+def get_faithfulness(graphid_list,edges_list,motifs_path):
+    class_faithfulness = []
     for i, graphid in enumerate(graphid_list):
         
         edges = edges_list[graphid]
         expln_graph = nx.Graph(edges)
 
-        fid_score_list = []  
+        faith_score_list = []
 
         path = motifs_path + 'class' + str(i) + '/'
         
@@ -25,20 +25,20 @@ def get_avg_fidelity(graphid_list,edges_list,motifs_path):
 
             GM = nx.algorithms.isomorphism.GraphMatcher(expln_graph,motif_graph)
             x = 1 if GM.subgraph_is_isomorphic() else 0    
-            fid_score_list.append(x)
+            faith_score_list.append(x)
 
-        class_avg_fidelity.append(np.mean(fid_score_list))
+        class_faithfulness.append(np.mean(faith_score_list))
 
-    return np.mean(class_avg_fidelity)
+    return np.mean(class_faithfulness)
     
-def get_avg_fidelity_common(graphid_list,edges_list,motifs_path):
-    class_avg_fidelity = []
+def get_faithfulness_common(graphid_list,edges_list,motifs_path):
+    class_faithfulness = []
     for graphid in graphid_list:
         
         edges = edges_list[graphid]
         expln_graph = nx.Graph(edges)
 
-        fid_score_list = [] 
+        faith_score_list = []
          
         files_motif = os.listdir(motifs_path)  
            
@@ -49,11 +49,11 @@ def get_avg_fidelity_common(graphid_list,edges_list,motifs_path):
 
             GM = nx.algorithms.isomorphism.GraphMatcher(expln_graph,motif_graph)
             x = 1 if GM.subgraph_is_isomorphic() else 0    
-            fid_score_list.append(x)
+            faith_score_list.append(x)
 
-        class_avg_fidelity.append(np.mean(fid_score_list))
+        class_faithfulness.append(np.mean(faith_score_list))
 
-    return np.mean(class_avg_fidelity)
+    return np.mean(class_faithfulness)
     
 
 def selected_features_freq(X,feature_size):

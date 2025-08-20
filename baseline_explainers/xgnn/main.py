@@ -63,14 +63,13 @@ if args.dataset == 'ba3':
     MIN_NODES = 15
     MAX_NODES = 15
 
-def get_avg_fidelity(graph_list):
-    class_avg_fidelity = []
+def get_faithfulness(graph_list):
+    class_faithfulness = []
     for i, A in enumerate(graph_list):
 
         expln_graph = nx.from_numpy_array(A)
-        fid_score_list = []
-        
-	path = motifs_path + 'class' + str(i) + '/'
+        faith_score_list = []
+        path = motifs_path + 'class' + str(i) + '/'
 
         files_motif = os.listdir(path)
 
@@ -82,14 +81,14 @@ def get_avg_fidelity(graph_list):
             GM = nx.algorithms.isomorphism.GraphMatcher(expln_graph, motif_graph)
             x = 1 if GM.subgraph_is_isomorphic() else 0
 
-            fid_score_list.append(x)
+            faith_score_list.append(x)
 
-        class_avg_fidelity.append(np.mean(fid_score_list))
+        class_faithfulness.append(np.mean(faith_score_list))
 
-    return np.mean(class_avg_fidelity)
+    return np.mean(class_faithfulness)
 
 
-mean_fidelity_list = []
+mean_faithfulness_list = []
 avg_prob_list = []
 for nodesize in range(MIN_NODES, MAX_NODES+1):
     MAX_NODES = nodesize
@@ -123,17 +122,17 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
         avg_prob_list.append(np.mean(avg_prob))
         expln_graphs_list.append(expln_graphs)
 
-    avg_fidelity_list = []
+    faithfulness_list = []
 
     for i in range(0,1):
-        avg_fidelity = get_avg_fidelity(expln_graphs_list[i])
+        faithfulness = get_faithfulness(expln_graphs_list[i])
 
-        print('Run'+str(i),avg_fidelity)
-        avg_fidelity_list.append(avg_fidelity)
-    # print(np.mean(avg_fidelity_list))
-    mean_fidelity_list.append(np.mean(avg_fidelity_list))
+        print('Run'+str(i),faithfulness)
+        faithfulness_list.append(faithfulness)
+    # print(np.mean(faithfulness_list))
+    mean_faithfulness_list.append(np.mean(faithfulness_list))
 
-print('Average fidelity for all node sizes', np.mean(mean_fidelity_list))
+print('Average faithfulness for all node sizes', np.mean(mean_faithfulness_list))
 print('Average probability for all node sizes', np.mean(avg_prob_list))
 
 

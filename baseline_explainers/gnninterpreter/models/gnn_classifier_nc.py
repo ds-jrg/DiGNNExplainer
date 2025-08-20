@@ -21,11 +21,11 @@ class GNNClassifierNC(nn.Module):
     def forward(self, batch=None, embeds=None, feats=None, edge_weight=None, temperature=0.05):
         
 
-            # 1. Obtain node embeddings
-            h = self.conv(batch.x, batch.edge_index, edge_weight=edge_weight)
+        # 1. Obtain node embeddings
+        h = self.conv(batch.x, batch.edge_index, edge_weight=edge_weight)
 
-            # 2. Readout layer
-            embeds = pyg.nn.pool.avg_pool(batch.y,batch).x
+        # 2. Readout layer
+        embeds = pyg.nn.pool.avg_pool(batch.y,batch).x
        
 
         
