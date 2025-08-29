@@ -123,3 +123,14 @@ The specifications of the machine used to run the code:
 - Tree-Grids : https://www.dgl.ai/dgl_docs/generated/dgl.data.TreeGridDataset.html
 - BA-3Motif : https://github.com/Wuyxin/ReFine/tree/main/data/BA3/raw
 
+## Cite the paper
+```
+@article{Das2025Discrete,
+  author       = {Pallabee Das and
+                  Stefan Heindorf},
+  title        = {Discrete Diffusion-Based Model-Level Explanation of Heterogeneous GNNs with
+                  Node Features},
+  journal      = {CoRR},
+  volume       = {abs/2508.08458},
+  year         = {2025}
+}
