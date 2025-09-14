@@ -9,12 +9,11 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="MMD")
-    parser.add_argument("--dataset", type=str, default="dblp")
+    parser.add_argument("--dataset", type=str, default="ba3")
 
     return parser.parse_args()
 
 args = parse_args()
-
 
 if args.dataset == 'dblp':
     CLASSES = [0, 1, 2, 3]
@@ -38,7 +37,7 @@ if args.dataset == 'ba3':
     CLASSES = [0, 1, 2]
 
 
-def get_graphs(files):
+def get_graphs(files,path):
     graph_list = []
     for index, file in enumerate(files):
 
@@ -49,81 +48,41 @@ def get_graphs(files):
             graph_list.append(G_syn)
     return graph_list
 
+def mmd(expln_graph_path):
+
+    class_files = os.listdir(expln_graph_path)
+    graph_list = get_graphs(class_files,expln_graph_path)
+    # Compute MMD
+    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
+    return MMD
+
+def avg_mmd(expln_graph_path, explainer):
+    MMD_list = []
+    for target_class in CLASSES:
+        expln_path = expln_graph_path + args.dataset + '/class' + str(target_class)
+        MMD_list.append(mmd(expln_path))
+    df = pd.DataFrame(MMD_list)
+    mean = dict(df.mean())
+    print(explainer, mean)
+
+
 #Real graphs
 path = '../real_graphs/' + args.dataset+'/'
 files = os.listdir(path)
-orig_graph_list = get_graphs(files)
+orig_graph_list = get_graphs(files,path)
 
 
-# #XGNN MMD
-MMD_list = []
-for target_class in CLASSES:
-    path = '../explanation_graphs/xgnn/' + args.dataset+'/class' + str(target_class)
-    class_files = os.listdir(path)
-    graph_list = get_graphs(class_files)
-    # Compute MMD
-    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
-    MMD_list.append(MMD)
-
-df = pd.DataFrame(MMD_list)
-mean = dict(df.mean())
-print('xgnn',mean)
-
+# XGNN MMD
+xgnn_mmd = avg_mmd( '../explanation_graphs/xgnn/', 'xgnn')
 # GNNInterpreter MMD
-MMD_list = []
-for target_class in CLASSES:
-    path = '../explanation_graphs/gnnint/' + args.dataset+'/class' + str(target_class)
-    class_files = os.listdir(path)
-    graph_list = get_graphs(class_files)
-    # Compute MMD
-    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
-    MMD_list.append(MMD)
-
-df = pd.DataFrame(MMD_list)
-mean = dict(df.mean())
-print('gnninterpreter',mean)
-
+gnnint_mmd = avg_mmd( '../explanation_graphs/gnnint/', 'gnninterpreter')
 # D4Explainer MMD
-MMD_list = []
-for target_class in CLASSES:
-    path = '../explanation_graphs/d4/' + args.dataset+'/class' + str(target_class)
-    class_files = os.listdir(path)
-    graph_list = get_graphs(class_files)
-    # Compute MMD
-    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
-    MMD_list.append(MMD)
+gnnint_mmd = avg_mmd( '../explanation_graphs/d4/', 'd4explainer')
+# VAE MMD
+vae_mmd = avg_mmd( '../explanation_graphs/vae/', 'vae')
+# DiGNNExplainer MMD
+dignn_mmd = avg_mmd( '../explanation_graphs/dignn/', 'dignnexplainer')
 
-df = pd.DataFrame(MMD_list)
-mean = dict(df.mean())
-print('d4explainer',mean)
-
-#DiGNNExplainer MMD
-MMD_list = []
-for target_class in CLASSES:
-    path = '../explanation_graphs/dignn/' + args.dataset+'/class' + str(target_class)
-    class_files = os.listdir(path)
-    graph_list = get_graphs(class_files)
-    # Compute MMD
-    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
-    MMD_list.append(MMD)
-
-df = pd.DataFrame(MMD_list)
-mean = dict(df.mean())
-print('dignnexplainer',mean)
-
-#VAE MMD
-MMD_list = []
-for target_class in CLASSES:
-    path = '../explanation_graphs/vae/' + args.dataset+'/class' + str(target_class)
-    class_files = os.listdir(path)
-    graph_list = get_graphs(class_files)
-    # Compute MMD
-    MMD = eval_graph_list(orig_graph_list, graph_list, args.dataset)
-    MMD_list.append(MMD)
-
-df = pd.DataFrame(MMD_list)
-mean = dict(df.mean())
-print('vae',mean)
 
 
 
