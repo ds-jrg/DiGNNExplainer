@@ -16,7 +16,7 @@ class SpectreGraphDataset(InMemoryDataset):
         self.dataset_name = dataset_name
         self.split = split
         self.node_size = node_size
-        self.num_graphs =  1000 #200
+        self.num_graphs =  200
         super().__init__(root, transform, pre_transform, pre_filter)
         self.data, self.slices = torch.load(self.processed_paths[0])
 
@@ -30,9 +30,7 @@ class SpectreGraphDataset(InMemoryDataset):
 
     def download(self):
         base_path = pathlib.Path(os.path.realpath(__file__)).parents[2]
-        # if self.dataset_name == 'ba3':
-        #     file_path = os.path.join(base_path, 'original_graphs/'+self.dataset_name +'/'+'class2.pt')
-        # else:
+
         file_path = os.path.join(base_path, 'original_graphs/'+self.dataset_name+'/'+str(self.node_size)+'.pt')
 
         adjs, node_types = torch.load(file_path)
@@ -77,17 +75,15 @@ class SpectreGraphDataset(InMemoryDataset):
         for data in raw_dataset:
             adj, node_types = data
             n = adj.shape[-1]
-            # For DBLP, PubMed, BAShapes, Ba3
-            #if self.dataset_name in ['dblp', 'pubmed', 'BA-Shapes', 'ba3']:
-            if self.dataset_name in ['dblp', 'pubmed', 'BA-Shapes']:
+            # For DBLP, BAShapes
+            if self.dataset_name in ['dblp', 'BA-Shapes']:
                 node_classes = [0, 1, 2, 3]
             # For IMDB
             elif self.dataset_name in ['imdb']:
                 node_classes = [0, 1, 2]
-            # For TreeCycle, TreeGrid
-            elif self.dataset_name in ['TreeCycle', 'TreeGrid','ba3']:
+            # For TreeCycle, TreeGrid, ba3
+            elif self.dataset_name in ['TreeCycle', 'TreeGrid', 'ba3']:
                 node_classes = [0, 1]
-            #node_types = node_type
 
             X = F.one_hot(torch.tensor(node_types), num_classes=len(node_classes)).float()
             y = torch.zeros([1, 0]).float()
@@ -141,14 +137,13 @@ class SpectreDatasetInfos(AbstractDatasetInfos):
         self.name = 'nx_graphs'
         self.n_nodes = self.datamodule.node_counts()
 
-        # For DBLP, PubMed, BAShapes
-        #if self.cfg.general.dataset_name in ['dblp', 'pubmed', 'BA-Shapes', 'ba3']:
-        if self.cfg.general.dataset_name in ['dblp', 'pubmed', 'BA-Shapes']:
+        # For DBLP, BAShapes
+        if self.cfg.general.dataset_name in ['dblp', 'BA-Shapes']:
             self.node_types = torch.tensor([0, 1, 2, 3])
         # For IMDB
         elif self.cfg.general.dataset_name in ['imdb']:
             self.node_types = torch.tensor([0, 1, 2])
-        # For TreeCycle, TreeGrid
+        # For TreeCycle, TreeGrid, ba3
         elif self.cfg.general.dataset_name in ['TreeCycle', 'TreeGrid', 'ba3']:
             self.node_types = torch.tensor([0, 1])
 

@@ -98,9 +98,8 @@ class FeatureDataset(InMemoryDataset):
 
             if self.node_type == 'author':
                 # Author
-
                 # Get node degree
-                author_nodes_deg = self.get_one_hot_degree(data['author'].x,data['author','to','paper'].edge_index)
+                # author_nodes_deg = self.get_one_hot_degree(data['author'].x,data['author','to','paper'].edge_index)
 
                 # Get class for original features
                 author = data['author'].x.tolist()
@@ -109,49 +108,60 @@ class FeatureDataset(InMemoryDataset):
                 author_class = self.get_node_classs_feat(author_df)
 
                 # Get node class for one-hot encoded degree
-                author_df_deg = pd.DataFrame(author_nodes_deg.x)
-                author_df_deg['class'] = data['author'].y.tolist()
-                author_class_deg_df = self.get_node_classs_feat(author_df_deg)
+                # author_df_deg = pd.DataFrame(author_nodes_deg.x)
+                # author_df_deg['class'] = data['author'].y.tolist()
+                # author_class_deg_df = self.get_node_classs_feat(author_df_deg)
 
                 # Feature selection for Author class
                 if self.feature_selection_method == 'frequency':
                     sel_feat  = self.get_selected_features(author_class)
                     sel_feat_df = self.set_feat_col_names(sel_feat)
-                    node_feat =self.concat_feat_degree(sel_feat_df.reset_index(drop=True),author_class_deg_df.reset_index(drop=True))
+
+                    # To capture feature-structure dependence for discrete features using one_hot_degree
+                    # https://pytorch-geometric.readthedocs.io/en/2.7.0/_modules/torch_geometric/transforms/one_hot_degree.html
+                    #node_feat =self.concat_feat_degree(sel_feat_df.reset_index(drop=True),author_class_deg_df.reset_index(drop=True))
+                    node_feat = sel_feat_df
 
                 elif self.feature_selection_method == 'variance':
                     sel_feat = self.feature_selection_var(author_class, threshold=self.threshold).iloc[:, : self.node_feature_size]
                     sel_feat_df = self.set_feat_col_names(sel_feat)
-                    node_feat =self.concat_feat_degree(sel_feat_df.reset_index(drop=True),author_class_deg_df.reset_index(drop=True))
+
+                    #node_feat =self.concat_feat_degree(sel_feat_df.reset_index(drop=True),author_class_deg_df.reset_index(drop=True))
+                    node_feat = sel_feat_df
 
             elif self.node_type == 'paper':
                 # Paper
-                paper_to_term_edge_index = data['paper', 'to', 'term'].edge_index
-                paper_to_conf_edge_index = data['paper', 'to', 'conference'].edge_index
-                paper_edge_index = torch.cat([paper_to_term_edge_index, paper_to_conf_edge_index], dim=1)
-                paper_nodes_deg = self.get_one_hot_degree(data['paper'].x, paper_edge_index)
-                paper_df_deg = pd.DataFrame(paper_nodes_deg.x)
+                # paper_to_term_edge_index = data['paper', 'to', 'term'].edge_index
+                # paper_to_conf_edge_index = data['paper', 'to', 'conference'].edge_index
+                # paper_edge_index = torch.cat([paper_to_term_edge_index, paper_to_conf_edge_index], dim=1)
+                # paper_nodes_deg = self.get_one_hot_degree(data['paper'].x, paper_edge_index)
+                # paper_df_deg = pd.DataFrame(paper_nodes_deg.x)
 
                 paper = data['paper'].x.tolist()
                 df_paper = pd.DataFrame(paper)
                 if self.feature_selection_method == 'frequency':
                     sel_feat = self.get_selected_features(df_paper)
                     sel_feat_df = self.set_feat_col_names(sel_feat)
-                    node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), paper_df_deg.reset_index(drop=True))
+
+                    #node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), paper_df_deg.reset_index(drop=True))
+                    node_feat = sel_feat_df
 
                 elif self.feature_selection_method == 'variance':
                     sel_feat = self.feature_selection_var(df_paper, threshold = self.threshold).iloc[:, : self.node_feature_size]
                     sel_feat_df = self.set_feat_col_names(sel_feat)
-                    node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), paper_df_deg.reset_index(drop=True))
+
+                    #node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), paper_df_deg.reset_index(drop=True))
+                    node_feat = sel_feat_df
 
         elif self.dataset_name == 'imdb':
             dataset = IMDB(root='./imdb_data')
             data = dataset[0]
+
             # Get node degree
-            movie_to_director_edge_index = data['movie', 'to', 'director'].edge_index
-            movie_to_actor_edge_index = data['movie', 'to', 'actor'].edge_index
-            movie_edge_index = torch.cat([movie_to_director_edge_index, movie_to_actor_edge_index], dim=1)
-            movie_nodes_deg = self.get_one_hot_degree(data['movie'].x, movie_edge_index)
+            # movie_to_director_edge_index = data['movie', 'to', 'director'].edge_index
+            # movie_to_actor_edge_index = data['movie', 'to', 'actor'].edge_index
+            # movie_edge_index = torch.cat([movie_to_director_edge_index, movie_to_actor_edge_index], dim=1)
+            # movie_nodes_deg = self.get_one_hot_degree(data['movie'].x, movie_edge_index)
 
             # Get class for original features
             movie = data['movie'].x.tolist()
@@ -160,9 +170,9 @@ class FeatureDataset(InMemoryDataset):
             movie_class = self.get_node_classs_feat(movie_df)
 
             # Get node class for one-hot encoded degree
-            movie_df_deg = pd.DataFrame(movie_nodes_deg.x)
-            movie_df_deg['class'] = data['movie'].y.tolist()
-            movie_class_deg_df = self.get_node_classs_feat(movie_df_deg)
+            # movie_df_deg = pd.DataFrame(movie_nodes_deg.x)
+            # movie_df_deg['class'] = data['movie'].y.tolist()
+            # movie_class_deg_df = self.get_node_classs_feat(movie_df_deg)
 
             if self.feature_selection_method == '':
                 node_feat = movie_class
@@ -170,11 +180,18 @@ class FeatureDataset(InMemoryDataset):
             elif self.feature_selection_method == 'frequency':
                 sel_feat = self.get_selected_features(movie_class)
                 sel_feat_df = self.set_feat_col_names(sel_feat)
-                node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), movie_class_deg_df.reset_index(drop=True))
+
+                # To capture feature-structure dependence for discrete features using one_hot_degree
+                # https://pytorch-geometric.readthedocs.io/en/2.7.0/_modules/torch_geometric/transforms/one_hot_degree.html
+                #node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), movie_class_deg_df.reset_index(drop=True))
+                node_feat = sel_feat_df
+
             elif self.feature_selection_method == 'variance':
                 sel_feat = self.feature_selection_var(movie_class, threshold=self.threshold).iloc[:,: self.node_feature_size]
                 sel_feat_df = self.set_feat_col_names(sel_feat)
-                node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), movie_class_deg_df.reset_index(drop=True))
+
+                #node_feat = self.concat_feat_degree(sel_feat_df.reset_index(drop=True), movie_class_deg_df.reset_index(drop=True))
+                node_feat = sel_feat_df
 
 
         # Using train/test/val -80/10/10

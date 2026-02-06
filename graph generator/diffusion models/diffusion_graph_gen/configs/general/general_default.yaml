@@ -26,5 +26,4 @@ final_model_chains_to_save: 20
 
 evaluate_all_checkpoints: False
 
-#node_size: 10
 dataset_name: 'dblp'
