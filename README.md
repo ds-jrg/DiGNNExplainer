@@ -111,7 +111,20 @@ The specifications of the machine used to run the code:
 4. To run code in `baseline_explainers`,
 - For `xgnn`, refer to [XGNN code](https://github.com/divelab/DIG/tree/5842d8d2a64c318286291fc93d3d11cfbc1e9749/dig/xgraph/XGNN).<br/>
 - For `gnninterpreter`, refer to [GNNInterpreter code](https://github.com/yolandalalala/GNNInterpreter/tree/a419343d0de20674e14cd1051b7983981cf6b47c) and [another GNNInterpreter implementation](https://github.com/MeneerTS/FACT2024_GNNInterpreter/tree/8ed5958383147c0c57f1e3bd34440636e926270d/GNNInterpreter-Most-Recent-Version).
-- For `d4explainer`, follow the installation steps of [D4Explainer code](https://github.com/Graph-and-Geometric-Learning/D4Explainer/tree/997b4c755fc19d0494c09bc3bd4925777ea53aca).<br/>
+- For `d4explainer`, follow the installation steps of [D4Explainer code](https://github.com/Graph-and-Geometric-Learning/D4Explainer/tree/997b4c755fc19d0494c09bc3bd4925777ea53aca) and 
+download the [pre-processed datasets](https://drive.google.com/drive/folders/1PY3Xkc6qy4m_QFdVtBdYyLWpTboHzlZq?usp=sharing) to `data/` directory. 
+Below are the hyperparameters used for our implementation:
+     
+	| Dataset     | num hidden | num layers in PPGN |  batch size | epochs |
+	|:-----------:|:----------:|:------------------:|:-----------:|:------:|
+	| `dblp`      | 64         | 6                  | 8           | 20     |
+	| `imdb`      | 64         | 6                  | 8           | 100    |
+	| `mutag`     | 128        | 8                  | 16          | 100    |
+	| `BA_shapes` | 4          | 4                  | 1           | 100    |
+	| `Tree_Cycle`| 8          | 4                  | 16          | 100    |	
+	| `Tree_Grids`| 8          | 4                  | 16          | 100    |
+	| `ba3`       | 128        | 6                  | 16          | 100    |
+    
 
        
 ## Source of datasets
@@ -134,3 +147,4 @@ The specifications of the machine used to run the code:
   volume       = {abs/2508.08458},
   year         = {2025}
 }
+

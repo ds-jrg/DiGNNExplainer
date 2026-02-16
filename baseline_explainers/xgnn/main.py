@@ -7,7 +7,7 @@ import time
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train explainers")
-    parser.add_argument("--dataset", type=str, default="dblp")
+    parser.add_argument("--dataset", type=str, default="BA_shapes")
     #parser.add_argument("--nodes", type=int, default=10)
     return parser.parse_args()
 
@@ -69,7 +69,10 @@ def get_faithfulness(graph_list):
 
         expln_graph = nx.from_numpy_array(A)
         faith_score_list = []
-        path = motifs_path + 'class' + str(i) + '/'
+        if args.dataset in ['dblp', 'imdb', 'mutag', 'ba3']:
+            path = motifs_path + 'class' + str(i) + '/'
+        else:
+            path = motifs_path
 
         files_motif = os.listdir(path)
 
@@ -95,7 +98,7 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
     print('NODE_SIZE', nodesize)
 
     expln_graphs_list = []
-    for i in range(0, 1):
+    for i in range(0, 10):
         print('Run'+str(i))
         expln_graphs = []
         avg_prob = []
@@ -124,7 +127,7 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
 
     faithfulness_list = []
 
-    for i in range(0,1):
+    for i in range(0,10):
         faithfulness = get_faithfulness(expln_graphs_list[i])
 
         print('Run'+str(i),faithfulness)
@@ -134,5 +137,4 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
 
 print('Average faithfulness for all node sizes', np.mean(mean_faithfulness_list))
 print('Average probability for all node sizes', np.mean(avg_prob_list))
-
 

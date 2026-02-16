@@ -97,10 +97,10 @@ class gnn_explain():
 
                         if correct_indices:
                             probs = logits.softmax(dim=-1)[correct_indices]
-                            reward_pred = probs.ravel()[self.target_class]- 0.2 # positive reward
+                            reward_pred = probs.ravel()[self.target_class]- 0.3 # positive reward
                         else:
                             probs = logits.softmax(dim=-1)[0]
-                            reward_pred = probs[self.target_class] - 0.2 #negative reward
+                            reward_pred = probs[self.target_class] - 0.3 #negative reward
 
 
                         ### Then we need to roll out.
@@ -219,7 +219,7 @@ class gnn_explain():
         logits = self.gnnNets(data.x, data.edge_index)
         ### Todo
         probs = logits.softmax(dim=-1)[0]
-        reward = probs[self.target_class] - 0.2
+        reward = probs[self.target_class] - 0.3
         return reward
         
 

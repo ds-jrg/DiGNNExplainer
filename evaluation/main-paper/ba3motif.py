@@ -32,7 +32,7 @@ args = easydict.EasyDict({
     "dataset": 'BA3',
     "batch_size": 128,
     "hidden_channels": 64,
-    "lr": 0.0005,
+    "lr": 0.005,
     #"lr":1e-3,
     "epochs": 3000,
 })
@@ -57,7 +57,7 @@ class GCN(torch.nn.Module):
         x = global_mean_pool(x, batch)  # [batch_size, hidden_channels]
 
         # 3. Apply a final classifier
-        x = F.dropout(x, p=0.3, training=self.training)
+        x = F.dropout(x, p=0.5, training=self.training)
         x = self.lin(x)
 
         return x
@@ -114,7 +114,7 @@ train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True)
 
 
 
-graphs_path = '../graph generator/diffusion models/sampled_graphs_diffusion/'
+graphs_path = '../../graph generator/diffusion models/sampled_graphs_diffusion/'
 print('Original no of graphs:',len([name for name in glob.iglob(graphs_path + 'ba3_15/*.gexf')]))
 
 avg_max_pred_list = []

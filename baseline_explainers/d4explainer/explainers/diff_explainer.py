@@ -19,8 +19,6 @@ from explainers.diffusion.pgnn import Powerful
 import random
 
 
-
-
 def model_save(args, model, mean_train_loss, best_sparsity):
     """
     Save the model to disk
@@ -420,10 +418,11 @@ class DiffExplainer(Explainer):
 
 
     #One-step Model level explanation using the trained model
-    def one_step_model_level(self, args, adj, node_feature, target_class,node_size):
+    def one_step_model_level(self, args, adj, node_feature, target_class, nodesize):
 
         adj = adj.unsqueeze(0).to(args.device)  # batchsize=1
         node_feature = node_feature.unsqueeze(0).to(args.device)  # batchsize=1
+
         mask = torch.ones_like(adj).to(args.device)
 
         model = Powerful(args).to(args.device)
@@ -440,7 +439,7 @@ class DiffExplainer(Explainer):
         softmax_dict = {}
         best_softmax = torch.tensor(0)
         best_adj = torch.tensor([])
-        #Sample candidates
+        # Sample candidates
         for i, sigma in enumerate(sigma_list):
             score = model(A=adj.float(), node_features=node_feature.float(), mask=mask.float(), noiselevel=sigma)
             score = score.squeeze(0).squeeze(-1)
@@ -448,21 +447,22 @@ class DiffExplainer(Explainer):
             pred_adj = torch.where(torch.sigmoid(score) > 0.5, 1, 0).to(score.device)
             edge_index = pred_adj.nonzero().t().contiguous()
             if args.task == "nc":
-                #pass
+                # pass
                 output_prob, _ = self.model.get_node_pred_subgraph(
                     x=node_feature.float().squeeze(0).to(args.device),
                     edge_index=edge_index.to(args.device),
-                    mapping=torch.ones(node_size, dtype=torch.bool), #6
+                    mapping=torch.ones(nodesize, dtype=torch.bool),  # 6
                 )
                 y_pred = output_prob.argmax(dim=-1)
-                correct = (y_pred == torch.full((1,node_size), target_class).to(args.device)) #6
+                correct = (y_pred == torch.full((1, nodesize), target_class).to(args.device))  # 6
                 correct_indices = [i for i, x in enumerate(correct.tolist()) if x]
 
                 softmax_pred_list = [output_prob.tolist()[i] for i in correct_indices]
                 softmax_dict[pred_adj] = softmax_pred_list
             else:
                 output_prob, _ = self.model.get_pred(
-                    x=node_feature.float().squeeze(0).to(args.device) , edge_index=edge_index.to(args.device) , batch=torch.zeros(node_feature.shape[0]).long().to(args.device)
+                    x=node_feature.float().squeeze(0).to(args.device), edge_index=edge_index.to(args.device),
+                    batch=torch.zeros(nodesize).long().to(args.device)
                 )
 
                 y_pred = output_prob.argmax(dim=-1)
@@ -475,7 +475,6 @@ class DiffExplainer(Explainer):
                     if best_softmax < temp:
                         best_softmax = temp
                         best_adj = pred_adj
-
 
         if args.task == "nc":
             prob_class_dict = {}
@@ -497,38 +496,46 @@ class DiffExplainer(Explainer):
             best_adj = max(prob_class_dict, key=prob_class_dict.get)
 
         else:
-            if len(best_adj)==0:
-
+            if len(best_adj) == 0:
                 best_adj = adj.squeeze(0)
 
-        #temporary explanation
+        # temporary explanation
         return best_softmax, best_adj  # [N, N]
 
-    # https://networkx.org/documentation/stable/auto_examples/graph/plot_erdos_renyi.html
-    def multi_step_model_level(self, args, target_class, classes, node_size):
-        n = node_size   # nodes
-        m = n / 2  # edges
+    def multi_step_model_level(self, args, node_classes, target_class, node_feature_size, nodes):
+        edges = nodes / 2  # edges
         seed = 20160  # seed random number generators for reproducibility
 
-        #Sample an Erdős–Rényi graph
-        G = nx.gnm_random_graph(n, m, seed=seed)
-        #Get node features
-        if args.dataset in ['dblp', 'imdb', 'mutag']:
-            node_types = [random.choice(classes) for _ in range(n)]
-            targets = np.array(node_types).reshape(-1)
-            node_feature = torch.tensor(np.eye(len(classes))[targets])
-
-        elif args.dataset in ['BA_shapes','Tree_Cycle','Tree_Grids','ba3']:
-            node_feature = torch.tensor(np.eye(len(classes))[0]).repeat(n,1)
-
+        # Sample an Erdős–Rényi graph
+        G = nx.gnm_random_graph(nodes, edges, seed=seed)
+        for n in G.nodes:
+            G.nodes[n]["feature"] = np.random.uniform(0, 1, size=node_feature_size)
         adj = torch.tensor(nx.adjacency_matrix(G).todense())
+        node_feature = torch.tensor(list(nx.get_node_attributes(G, "feature").values()))
+
+        if args.dataset in ['dblp', 'imdb', 'mutag']:
+            if args.dataset in ['mutag']:
+                node_classes = [0, 1, 2, 3, 4, 5, 6]
+            elif args.dataset in ['ba3']:
+                node_classes = [0, 1, 2, 3]
+            node_types = [random.choice(node_classes) for _ in range(nodes)]
+            targets = np.array(node_types).reshape(-1)
+            node_feature = torch.tensor(np.eye(len(node_classes))[targets])
 
         steps = 50
         for i in range(steps, 1, -1):
+            softmax, pred_adj = self.one_step_model_level(args, adj, node_feature, target_class, nodes)
 
-            softmax, pred_adj = self.one_step_model_level(args,adj, node_feature, target_class, node_size)
-            adj = pred_adj
+        if isinstance(pred_adj, torch.Tensor):
+            if pred_adj.is_cuda:
+                pred_adj = pred_adj.detach().cpu().numpy()
 
-        return adj, softmax
+        if isinstance(softmax, torch.Tensor):
+            if softmax.is_cuda:
+                softmax = softmax.detach().cpu().numpy()
+
+        return pred_adj, softmax
+
+
 
 

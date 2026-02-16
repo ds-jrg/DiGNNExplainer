@@ -23,7 +23,7 @@ class gnn_explain():
         self.max_iters = max_iters
         self.num_class = 4
         self.node_type = 4
-        self.learning_rate = 0.01
+        self.learning_rate = 0.005
         self.roll_out_alpha = 2
         self.roll_out_penalty = -0.1
         self.policyNets= PolicyNN(self.node_type, self.node_type)

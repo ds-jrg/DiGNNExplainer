@@ -17,13 +17,14 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train explainers")
     parser.add_argument("--cuda", type=int, default=0, help="GPU device.")
     parser.add_argument("--root", type=str, default="results/", help="Result directory.")
-    parser.add_argument("--dataset", type=str, default="dblp", choices=dataset_choices)
+    # dblp and imdb works in torch-geometric==2.4.0, for all other datasets use torch-geometric==2.0.4
+    parser.add_argument("--dataset", type=str, default="Tree_Cycle", choices=dataset_choices)
     parser.add_argument("--verbose", type=int, default=10)
     parser.add_argument("--gnn_type", type=str, default="gcn")
-    parser.add_argument("--task", type=str, default="nc")
+    parser.add_argument("--task", type=str, default="gc")
 
-    parser.add_argument("--train_batchsize", type=int, default=8)
-    parser.add_argument("--test_batchsize", type=int, default=8)
+    parser.add_argument("--train_batchsize", type=int, default=16)
+    parser.add_argument("--test_batchsize", type=int, default=16)
     parser.add_argument("--sigma_length", type=int, default=10)
     parser.add_argument("--epoch", type=int, default=100)
     parser.add_argument("--feature_in", type=int)
@@ -40,15 +41,14 @@ def parse_args():
     parser.add_argument("--sparsity_level", type=float, default=2.5)
 
     parser.add_argument("--normalization", type=str, default="instance")
-    parser.add_argument("--num_layers", type=int, default=6)
+    parser.add_argument("--num_layers", type=int, default=4)
     parser.add_argument("--layers_per_conv", type=int, default=1)
-    parser.add_argument("--n_hidden", type=int, default=64)
+    parser.add_argument("--n_hidden", type=int, default=8)
     parser.add_argument("--cat_output", type=bool, default=True)
     parser.add_argument("--residual", type=bool, default=False)
     parser.add_argument("--noise_mlp", type=bool, default=True)
     parser.add_argument("--simplified", type=bool, default=False)
 
-    parser.add_argument("--nodes", type=int, default=15)
 
     return parser.parse_args()
 
@@ -67,9 +67,10 @@ explainer = DiffExplainer(args.device, gnn_path)
 # start time
 start = time.time()
 # Train D4Explainer over train_dataset and evaluate
-explainer.explain_graph_task(args, train_dataset, val_dataset)
+#explainer.explain_graph_task(args, train_dataset, val_dataset)
 
 ########################### Model-Level ###############################################
+NODE_FEATURE_SIZE = feature_dict.get(args.dataset)
 
 if args.dataset == 'dblp':
     motifs_path = '../../evaluation/motifs/dblp/'
@@ -121,8 +122,10 @@ def get_faithfulness(graph_list):
 
         expln_graph = nx.from_numpy_array(A)
         faith_score_list = []
-
-        path = motifs_path + 'class' + str(i) + '/'
+        if args.dataset in ['dblp','imdb','mutag','ba3']:
+            path = motifs_path + 'class' + str(i) + '/'
+        else:
+            path = motifs_path
 
         files_motif = os.listdir(path)
 
@@ -133,7 +136,6 @@ def get_faithfulness(graph_list):
 
             GM = nx.algorithms.isomorphism.GraphMatcher(expln_graph, motif_graph)
             x = 1 if GM.subgraph_is_isomorphic() else 0
-
             faith_score_list.append(x)
 
         class_faithfulness.append(np.mean(faith_score_list))
@@ -153,11 +155,12 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
         avg_prob = []
         for target_class in CLASSES:
 
-            adj, prob = explainer.multi_step_model_level(args, target_class, CLASSES, nodesize)
+            adj, prob = explainer.multi_step_model_level(args, CLASSES, target_class, NODE_FEATURE_SIZE, nodesize)
             avg_prob.append(prob)
-            expln_graphs.append(adj.detach().cpu().numpy())
+            expln_graphs.append(adj)
             print(target_class, adj, prob)
-            G = nx.from_numpy_array(adj.detach().cpu().numpy())
+
+            G = nx.from_numpy_array(adj)
             #nx.draw(G,node_size=100)
             #plt.savefig(args.dataset+str(target_class)+'.pdf')
             #plt.show()
@@ -167,13 +170,13 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
 
     faithfulness_list = []
 
-for i in range(0,10):
+    for i in range(0,10):
 
-    faithfulness = get_faithfulness(expln_graphs_list[i])
+        faithfulness = get_faithfulness(expln_graphs_list[i])
 
-    print('Run'+str(i),faithfulness)
-    faithfulness_list.append(faithfulness)
-    # print(np.mean(faithfulness_list))
+        print('Run'+str(i),faithfulness)
+        faithfulness_list.append(faithfulness)
+        # print(np.mean(faithfulness_list))
     mean_faithfulness_list.append(np.mean(faithfulness_list))
  # end time
 duration = time.time() - start
