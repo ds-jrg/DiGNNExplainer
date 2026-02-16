@@ -147,4 +147,3 @@ Below are the hyperparameters used for our implementation:
   volume       = {abs/2508.08458},
   year         = {2025}
 }
-
