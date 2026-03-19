@@ -72,7 +72,7 @@ The specifications of the machine used to run the code:
 - Run jupyter notebook:
  `jupyter notebook`
  
-- As an initial setup download the IMDB node features from [here](https://drive.google.com/file/d/1cYWwO4WgfafH3G0bOw69DQsLAFUiJs-5/view?usp=sharing) to `graph generator/diffusion models/sampled_features_diffusion/no_dependence/tabddpm/imdb`.<br/> 
+- As an initial setup download the IMDB node features from [here](https://groups.uni-paderborn.de/fg-ds-jrg/papers/www26-dignnexplainer/imdb_features_tabddpm.zip) to `graph generator/diffusion models/sampled_features_diffusion/no_dependence/tabddpm/imdb`.<br/> 
 
 3. For graph generation and node feature generation,<br/>
 
@@ -112,7 +112,7 @@ The specifications of the machine used to run the code:
 - For `xgnn`, refer to [XGNN code](https://github.com/divelab/DIG/tree/5842d8d2a64c318286291fc93d3d11cfbc1e9749/dig/xgraph/XGNN).<br/>
 - For `gnninterpreter`, refer to [GNNInterpreter code](https://github.com/yolandalalala/GNNInterpreter/tree/a419343d0de20674e14cd1051b7983981cf6b47c) and [another GNNInterpreter implementation](https://github.com/MeneerTS/FACT2024_GNNInterpreter/tree/8ed5958383147c0c57f1e3bd34440636e926270d/GNNInterpreter-Most-Recent-Version).
 - For `d4explainer`, follow the installation steps of [D4Explainer code](https://github.com/Graph-and-Geometric-Learning/D4Explainer/tree/997b4c755fc19d0494c09bc3bd4925777ea53aca) and 
-download the [pre-processed datasets](https://drive.google.com/drive/folders/1PY3Xkc6qy4m_QFdVtBdYyLWpTboHzlZq?usp=sharing) to `data/` directory. 
+download the [pre-processed datasets](https://groups.uni-paderborn.de/fg-ds-jrg/papers/www26-dignnexplainer/d4explainer_baseline/data.zip) to `data/` directory. 
 Below are the hyperparameters used for our implementation:
      
 	| Dataset     | num hidden | num layers in PPGN |  batch size | epochs |
