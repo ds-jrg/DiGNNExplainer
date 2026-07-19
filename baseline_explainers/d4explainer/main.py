@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument("--dataset", type=str, default="Tree_Cycle", choices=dataset_choices)
     parser.add_argument("--verbose", type=int, default=10)
     parser.add_argument("--gnn_type", type=str, default="gcn")
-    parser.add_argument("--task", type=str, default="gc")
+    parser.add_argument("--task", type=str, default="nc")
 
     parser.add_argument("--train_batchsize", type=int, default=16)
     parser.add_argument("--test_batchsize", type=int, default=16)
@@ -67,7 +67,7 @@ explainer = DiffExplainer(args.device, gnn_path)
 # start time
 start = time.time()
 # Train D4Explainer over train_dataset and evaluate
-#explainer.explain_graph_task(args, train_dataset, val_dataset)
+explainer.explain_graph_task(args, train_dataset, val_dataset)
 
 ########################### Model-Level ###############################################
 NODE_FEATURE_SIZE = feature_dict.get(args.dataset)
@@ -176,7 +176,7 @@ for nodesize in range(MIN_NODES, MAX_NODES+1):
 
         print('Run'+str(i),faithfulness)
         faithfulness_list.append(faithfulness)
-        # print(np.mean(faithfulness_list))
+
     mean_faithfulness_list.append(np.mean(faithfulness_list))
  # end time
 duration = time.time() - start

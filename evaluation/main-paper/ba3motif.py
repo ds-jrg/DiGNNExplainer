@@ -33,7 +33,6 @@ args = easydict.EasyDict({
     "batch_size": 128,
     "hidden_channels": 64,
     "lr": 0.005,
-    #"lr":1e-3,
     "epochs": 3000,
 })
 class GCN(torch.nn.Module):
@@ -112,10 +111,8 @@ val_loader = DataLoader(val_dataset, batch_size=128, shuffle=False)
 train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True)
 
 
-
-
 graphs_path = '../../graph generator/diffusion models/sampled_graphs_diffusion/'
-print('Original no of graphs:',len([name for name in glob.iglob(graphs_path + 'ba3_15/*.gexf')]))
+print('Original no of graphs:',len([name for name in glob.iglob(graphs_path + 'ba3/*.gexf')]))
 
 avg_max_pred_list = []
 max_pred_list = []
@@ -217,7 +214,7 @@ for i in range(0,10):
     nodefeature_dict = {}
     graph_dict = {}
 
-    for filepath in glob.iglob(graphs_path + 'ba3_15/*.gexf'):
+    for filepath in glob.iglob(graphs_path + 'ba3/*.gexf'):
         graph = nx.read_gexf(filepath)
         
         filename = os.path.basename(filepath)
@@ -244,7 +241,7 @@ for i in range(0,10):
     get_max_pred(softmax_dict, i)
 
 print('Avg prob',np.mean(avg_max_pred_list))
-path= 'ba3_plots/'
+#path= 'ba3_plots/'
 m = max(avg_max_pred_list)
 index = avg_max_pred_list.index(m)
 
@@ -268,7 +265,7 @@ def plot_graph(graphid, max_pred, nodetype):
     nx.draw(graph,
             with_labels=False,
             node_size=100)
-    plt.savefig(path + graphid + '.pdf')
+    #plt.savefig(path + graphid + '.pdf')
     plt.show()
 
 explanation_graph0 = plot_graph(class0_graphid, max_pred0, 0)
